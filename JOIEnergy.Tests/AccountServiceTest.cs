@@ -1,38 +1,37 @@
-using System;
-using System.Collections.Generic;
-using JOIEnergy.Enums;
-using JOIEnergy.Services;
-using Xunit;
-
 namespace JOIEnergy.Tests
 {
-    public class AccountServiceTest
+  using System.Collections.Generic;
+  using Enums;
+  using Services;
+  using Xunit;
+
+  public class AccountServiceTest
+  {
+    public AccountServiceTest()
     {
-        private const Supplier PRICE_PLAN_ID = Supplier.PowerForEveryone;
-        private const String SMART_METER_ID = "smart-meter-id";
+      var smartMeterToPricePlanAccounts = new Dictionary<string, Supplier>();
+      smartMeterToPricePlanAccounts.Add(SMART_METER_ID, PRICE_PLAN_ID);
 
-        private AccountService accountService;
-
-        public AccountServiceTest()
-        {
-            Dictionary<String, Supplier> smartMeterToPricePlanAccounts = new Dictionary<string, Supplier>();
-            smartMeterToPricePlanAccounts.Add(SMART_METER_ID, PRICE_PLAN_ID);
-
-            accountService = new AccountService(smartMeterToPricePlanAccounts);
-        }
-
-        [Fact]
-        public void GivenTheSmartMeterIdReturnsThePricePlanId()
-        {
-            var result = accountService.GetPricePlanIdForSmartMeterId("smart-meter-id");
-            Assert.Equal(Supplier.PowerForEveryone, result);
-        }
-
-        [Fact]
-        public void GivenAnUnknownSmartMeterIdReturnsANullSupplier()
-        {
-            var result = accountService.GetPricePlanIdForSmartMeterId("bob-carolgees");
-            Assert.Equal(Supplier.NullSupplier, result);
-        }
+      accountService = new AccountService(smartMeterToPricePlanAccounts);
     }
+
+    private const Supplier PRICE_PLAN_ID = Supplier.PowerForEveryone;
+    private const string SMART_METER_ID = "smart-meter-id";
+
+    private readonly AccountService accountService;
+
+    [Fact]
+    public void GivenAnUnknownSmartMeterIdReturnsANullSupplier()
+    {
+      var result = accountService.GetPricePlanIdForSmartMeterId("bob-carolgees");
+      Assert.Equal(Supplier.NullSupplier, result);
+    }
+
+    [Fact]
+    public void GivenTheSmartMeterIdReturnsThePricePlanId()
+    {
+      var result = accountService.GetPricePlanIdForSmartMeterId("smart-meter-id");
+      Assert.Equal(Supplier.PowerForEveryone, result);
+    }
+  }
 }

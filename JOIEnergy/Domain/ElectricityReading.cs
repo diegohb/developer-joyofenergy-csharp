@@ -1,9 +1,10 @@
-﻿using System;
-namespace JOIEnergy.Domain
+﻿namespace JOIEnergy.Domain
 {
-    public class ElectricityReading
-    {
-        public DateTime Time { get; set; }
-        public Decimal Reading { get; set; }
-    }
+  using System;
+
+  public class ElectricityReading
+  {
+    public decimal Reading { get; set; }
+    public DateTime Time { get; set; }
+  }
 }
