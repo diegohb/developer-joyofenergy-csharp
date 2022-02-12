@@ -6,11 +6,11 @@
 
   public class ElectricityReadingGenerator
   {
-    public List<ElectricityReading> Generate(int number)
+    public List<ElectricityReading> Generate(int numberParam)
     {
       var readings = new List<ElectricityReading>();
       var random = new Random();
-      for (var i = 0; i < number; i++)
+      for (var i = 0; i < numberParam; i++)
       {
         var reading = (decimal)random.NextDouble();
         var electricityReading = new ElectricityReading { Reading = reading, Time = DateTime.Now.AddSeconds(-i * 10) };

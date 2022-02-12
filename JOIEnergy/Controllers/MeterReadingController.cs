@@ -1,6 +1,4 @@
-﻿
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace JOIEnergy.Controllers
 {
@@ -14,36 +12,36 @@ namespace JOIEnergy.Controllers
   {
     private readonly IMeterReadingService _meterReadingService;
 
-    public MeterReadingController(IMeterReadingService meterReadingService)
+    public MeterReadingController(IMeterReadingService meterReadingServiceParam)
     {
-      _meterReadingService = meterReadingService;
+      _meterReadingService = meterReadingServiceParam;
     }
 
-    [HttpGet("read/{smartMeterId}")]
-    public ObjectResult GetReading(string smartMeterId)
+    [HttpGet("read/{smartMeterIdParam}")]
+    public ObjectResult GetReading(string smartMeterIdParam)
     {
-      return new OkObjectResult(_meterReadingService.GetReadings(smartMeterId));
+      return new OkObjectResult(_meterReadingService.GetReadings(smartMeterIdParam));
     }
 
     // POST api/values
     [HttpPost("store")]
-    public ObjectResult Post([FromBody] MeterReadings meterReadings)
+    public ObjectResult Post([FromBody] MeterReadings meterReadingsParam)
     {
-      if (!IsMeterReadingsValid(meterReadings))
+      if (!isMeterReadingsValid(meterReadingsParam))
       {
         return new BadRequestObjectResult("Internal Server Error");
       }
 
-      _meterReadingService.StoreReadings(meterReadings.SmartMeterId, meterReadings.ElectricityReadings);
+      _meterReadingService.StoreReadings(meterReadingsParam.SmartMeterId, meterReadingsParam.ElectricityReadings);
       return new OkObjectResult("{}");
     }
 
     #region Support Methods
 
-    private bool IsMeterReadingsValid(MeterReadings meterReadings)
+    private bool isMeterReadingsValid(MeterReadings meterReadingsParam)
     {
-      var smartMeterId = meterReadings.SmartMeterId;
-      var electricityReadings = meterReadings.ElectricityReadings;
+      var smartMeterId = meterReadingsParam.SmartMeterId;
+      var electricityReadings = meterReadingsParam.ElectricityReadings;
       return smartMeterId != null && smartMeterId.Any()
                                   && electricityReadings != null && electricityReadings.Any();
     }

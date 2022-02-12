@@ -10,10 +10,10 @@
   {
     public MeterReadingServiceTest()
     {
-      meterReadingService = new MeterReadingService(new Dictionary<string, List<ElectricityReading>>());
+      _meterReadingService = new MeterReadingService(new Dictionary<string, List<ElectricityReading>>());
 
-      meterReadingService.StoreReadings
-      (SMART_METER_ID,
+      _meterReadingService.StoreReadings
+      (_smartMeterID,
         new List<ElectricityReading>
         {
           new ElectricityReading { Time = DateTime.Now.AddMinutes(-30), Reading = 35m },
@@ -21,23 +21,23 @@
         });
     }
 
-    private static readonly string SMART_METER_ID = "smart-meter-id";
+    private static readonly string _smartMeterID = "smart-meter-id";
 
-    private readonly MeterReadingService meterReadingService;
+    private readonly MeterReadingService _meterReadingService;
 
     [Fact]
     public void GivenMeterIdThatDoesNotExistShouldReturnNull()
     {
-      Assert.Empty(meterReadingService.GetReadings("unknown-id"));
+      Assert.Empty(_meterReadingService.GetReadings("unknown-id"));
     }
 
     [Fact]
     public void GivenMeterReadingThatExistsShouldReturnMeterReadings()
     {
-      meterReadingService.StoreReadings
-        (SMART_METER_ID, new List<ElectricityReading> { new ElectricityReading { Time = DateTime.Now, Reading = 25m } });
+      _meterReadingService.StoreReadings
+        (_smartMeterID, new List<ElectricityReading> { new ElectricityReading { Time = DateTime.Now, Reading = 25m } });
 
-      var electricityReadings = meterReadingService.GetReadings(SMART_METER_ID);
+      var electricityReadings = _meterReadingService.GetReadings(_smartMeterID);
 
       Assert.Equal(3, electricityReadings.Count);
     }

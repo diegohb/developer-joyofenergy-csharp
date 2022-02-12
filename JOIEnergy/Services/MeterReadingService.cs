@@ -5,33 +5,33 @@
 
   public class MeterReadingService : IMeterReadingService
   {
-    public MeterReadingService(Dictionary<string, List<ElectricityReading>> meterAssociatedReadings)
+    public MeterReadingService(Dictionary<string, List<ElectricityReading>> meterAssociatedReadingsParam)
     {
-      MeterAssociatedReadings = meterAssociatedReadings;
+      MeterAssociatedReadings = meterAssociatedReadingsParam;
     }
 
     public Dictionary<string, List<ElectricityReading>> MeterAssociatedReadings { get; set; }
 
-    public List<ElectricityReading> GetReadings(string smartMeterId)
+    public List<ElectricityReading> GetReadings(string smartMeterIdParam)
     {
-      if (MeterAssociatedReadings.ContainsKey(smartMeterId))
+      if (MeterAssociatedReadings.ContainsKey(smartMeterIdParam))
       {
-        return MeterAssociatedReadings[smartMeterId];
+        return MeterAssociatedReadings[smartMeterIdParam];
       }
 
       return new List<ElectricityReading>();
     }
 
-    public void StoreReadings(string smartMeterId, List<ElectricityReading> electricityReadings)
+    public void StoreReadings(string smartMeterIdParam, List<ElectricityReading> electricityReadingsParam)
     {
-      if (!MeterAssociatedReadings.ContainsKey(smartMeterId))
+      if (!MeterAssociatedReadings.ContainsKey(smartMeterIdParam))
       {
-        MeterAssociatedReadings.Add(smartMeterId, new List<ElectricityReading>());
+        MeterAssociatedReadings.Add(smartMeterIdParam, new List<ElectricityReading>());
       }
 
-      electricityReadings.ForEach
+      electricityReadingsParam.ForEach
       (electricityReading =>
-        MeterAssociatedReadings[smartMeterId].Add(electricityReading));
+        MeterAssociatedReadings[smartMeterIdParam].Add(electricityReading));
     }
   }
 }

@@ -13,63 +13,63 @@
 
   public class Startup
   {
-    public Startup(IConfiguration configuration)
+    public Startup(IConfiguration configurationParam)
     {
-      Configuration = configuration;
+      Configuration = configurationParam;
     }
 
     public IConfiguration Configuration { get; }
 
-    public Dictionary<string, Supplier> SmartMeterToPricePlanAccounts
+    public Dictionary<string, SupplierEnum> SmartMeterToPricePlanAccounts
     {
       get
       {
-        var smartMeterToPricePlanAccounts = new Dictionary<string, Supplier>();
-        smartMeterToPricePlanAccounts.Add("smart-meter-0", Supplier.DrEvilsDarkEnergy);
-        smartMeterToPricePlanAccounts.Add("smart-meter-1", Supplier.TheGreenEco);
-        smartMeterToPricePlanAccounts.Add("smart-meter-2", Supplier.DrEvilsDarkEnergy);
-        smartMeterToPricePlanAccounts.Add("smart-meter-3", Supplier.PowerForEveryone);
-        smartMeterToPricePlanAccounts.Add("smart-meter-4", Supplier.TheGreenEco);
+        var smartMeterToPricePlanAccounts = new Dictionary<string, SupplierEnum>();
+        smartMeterToPricePlanAccounts.Add("smart-meter-0", SupplierEnum.DrEvilsDarkEnergy);
+        smartMeterToPricePlanAccounts.Add("smart-meter-1", SupplierEnum.TheGreenEco);
+        smartMeterToPricePlanAccounts.Add("smart-meter-2", SupplierEnum.DrEvilsDarkEnergy);
+        smartMeterToPricePlanAccounts.Add("smart-meter-3", SupplierEnum.PowerForEveryone);
+        smartMeterToPricePlanAccounts.Add("smart-meter-4", SupplierEnum.TheGreenEco);
         return smartMeterToPricePlanAccounts;
       }
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder appParam, IHostingEnvironment envParam)
     {
-      if (env.IsDevelopment())
+      if (envParam.IsDevelopment())
       {
-        app.UseDeveloperExceptionPage();
+        appParam.UseDeveloperExceptionPage();
       }
 
-      app.UseMvc();
+      appParam.UseMvc();
     }
 
     // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
+    public void ConfigureServices(IServiceCollection servicesParam)
     {
       var readings =
-        GenerateMeterElectricityReadings();
+        generateMeterElectricityReadings();
 
       var pricePlans = new List<PricePlan>
       {
-        new PricePlan { EnergySupplier = Supplier.DrEvilsDarkEnergy, UnitRate = 10m, PeakTimeMultiplier = new List<PeakTimeMultiplier>() },
-        new PricePlan { EnergySupplier = Supplier.TheGreenEco, UnitRate = 2m, PeakTimeMultiplier = new List<PeakTimeMultiplier>() },
-        new PricePlan { EnergySupplier = Supplier.PowerForEveryone, UnitRate = 1m, PeakTimeMultiplier = new List<PeakTimeMultiplier>() }
+        new PricePlan { EnergySupplier = SupplierEnum.DrEvilsDarkEnergy, UnitRate = 10m, PeakTimeMultiplier = new List<PeakTimeMultiplier>() },
+        new PricePlan { EnergySupplier = SupplierEnum.TheGreenEco, UnitRate = 2m, PeakTimeMultiplier = new List<PeakTimeMultiplier>() },
+        new PricePlan { EnergySupplier = SupplierEnum.PowerForEveryone, UnitRate = 1m, PeakTimeMultiplier = new List<PeakTimeMultiplier>() }
       };
 
-      services.AddMvc();
-      services.AddTransient<IAccountService, AccountService>();
-      services.AddTransient<IMeterReadingService, MeterReadingService>();
-      services.AddTransient<IPricePlanService, PricePlanService>();
-      services.AddSingleton(arg => readings);
-      services.AddSingleton(arg => pricePlans);
-      services.AddSingleton(arg => SmartMeterToPricePlanAccounts);
+      servicesParam.AddMvc();
+      servicesParam.AddTransient<IAccountService, AccountService>();
+      servicesParam.AddTransient<IMeterReadingService, MeterReadingService>();
+      servicesParam.AddTransient<IPricePlanService, PricePlanService>();
+      servicesParam.AddSingleton(arg => readings);
+      servicesParam.AddSingleton(arg => pricePlans);
+      servicesParam.AddSingleton(arg => SmartMeterToPricePlanAccounts);
     }
 
     #region Support Methods
 
-    private Dictionary<string, List<ElectricityReading>> GenerateMeterElectricityReadings()
+    private Dictionary<string, List<ElectricityReading>> generateMeterElectricityReadings()
     {
       var readings = new Dictionary<string, List<ElectricityReading>>();
       var generator = new ElectricityReadingGenerator();

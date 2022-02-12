@@ -3,23 +3,23 @@
   using System.Collections.Generic;
   using Enums;
 
-  public class AccountService : Dictionary<string, Supplier>, IAccountService
+  public class AccountService : Dictionary<string, SupplierEnum>, IAccountService
   {
-    private readonly Dictionary<string, Supplier> _smartMeterToPricePlanAccounts;
+    private readonly Dictionary<string, SupplierEnum> _smartMeterToPricePlanAccounts;
 
-    public AccountService(Dictionary<string, Supplier> smartMeterToPricePlanAccounts)
+    public AccountService(Dictionary<string, SupplierEnum> smartMeterToPricePlanAccountsParam)
     {
-      _smartMeterToPricePlanAccounts = smartMeterToPricePlanAccounts;
+      _smartMeterToPricePlanAccounts = smartMeterToPricePlanAccountsParam;
     }
 
-    public Supplier GetPricePlanIdForSmartMeterId(string smartMeterId)
+    public SupplierEnum GetPricePlanIdForSmartMeterId(string smartMeterIdParam)
     {
-      if (!_smartMeterToPricePlanAccounts.ContainsKey(smartMeterId))
+      if (!_smartMeterToPricePlanAccounts.ContainsKey(smartMeterIdParam))
       {
-        return Supplier.NullSupplier;
+        return SupplierEnum.NullSupplier;
       }
 
-      return _smartMeterToPricePlanAccounts[smartMeterId];
+      return _smartMeterToPricePlanAccounts[smartMeterIdParam];
     }
   }
 }

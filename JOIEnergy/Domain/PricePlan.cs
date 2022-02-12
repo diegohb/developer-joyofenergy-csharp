@@ -7,13 +7,13 @@
 
   public class PricePlan
   {
-    public Supplier EnergySupplier { get; set; }
+    public SupplierEnum EnergySupplier { get; set; }
     public IList<PeakTimeMultiplier> PeakTimeMultiplier { get; set; }
     public decimal UnitRate { get; set; }
 
-    public decimal GetPrice(DateTime datetime)
+    public decimal GetPrice(DateTime datetimeParam)
     {
-      var multiplier = PeakTimeMultiplier.FirstOrDefault(m => m.DayOfWeek == datetime.DayOfWeek);
+      var multiplier = PeakTimeMultiplier.FirstOrDefault(m => m.DayOfWeek == datetimeParam.DayOfWeek);
 
       if (multiplier?.Multiplier != null)
       {

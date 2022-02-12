@@ -1,6 +1,6 @@
 ﻿namespace JOIEnergy.Enums
 {
-  public enum Supplier
+  public enum SupplierEnum
   {
     DrEvilsDarkEnergy,
     TheGreenEco,

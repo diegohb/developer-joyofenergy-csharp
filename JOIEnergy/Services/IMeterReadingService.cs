@@ -5,8 +5,8 @@
 
   public interface IMeterReadingService
   {
-    List<ElectricityReading> GetReadings(string smartMeterId);
+    List<ElectricityReading> GetReadings(string smartMeterIdParam);
 
-    void StoreReadings(string smartMeterId, List<ElectricityReading> electricityReadings);
+    void StoreReadings(string smartMeterIdParam, List<ElectricityReading> electricityReadingsParam);
   }
 }

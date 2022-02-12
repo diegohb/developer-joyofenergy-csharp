@@ -12,7 +12,7 @@
     {
       _pricePlan = new PricePlan
       {
-        EnergySupplier = Supplier.TheGreenEco,
+        EnergySupplier = SupplierEnum.TheGreenEco,
         UnitRate = 20m,
         PeakTimeMultiplier = new List<PeakTimeMultiplier>
         {
@@ -33,7 +33,7 @@
     [Fact]
     public void TestGetEnergySupplier()
     {
-      Assert.Equal(Supplier.TheGreenEco, _pricePlan.EnergySupplier);
+      Assert.Equal(SupplierEnum.TheGreenEco, _pricePlan.EnergySupplier);
     }
 
     [Fact]

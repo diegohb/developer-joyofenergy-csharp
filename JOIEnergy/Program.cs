@@ -5,16 +5,16 @@
 
   public class Program
   {
-    public static IWebHost BuildWebHost(string[] args)
+    public static IWebHost BuildWebHost(string[] argsParam)
     {
-      return WebHost.CreateDefaultBuilder(args)
+      return WebHost.CreateDefaultBuilder(argsParam)
         .UseStartup<Startup>()
         .Build();
     }
 
-    public static void Main(string[] args)
+    public static void Main(string[] argsParam)
     {
-      BuildWebHost(args).Run();
+      BuildWebHost(argsParam).Run();
     }
   }
 }

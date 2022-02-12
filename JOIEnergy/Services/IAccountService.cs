@@ -4,6 +4,6 @@
 
   public interface IAccountService
   {
-    Supplier GetPricePlanIdForSmartMeterId(string smartMeterId);
+    SupplierEnum GetPricePlanIdForSmartMeterId(string smartMeterIdParam);
   }
 }
