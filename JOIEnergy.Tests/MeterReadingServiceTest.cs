@@ -8,6 +8,10 @@
 
   public class MeterReadingServiceTest
   {
+    private static readonly string _smartMeterID = "smart-meter-id";
+
+    private readonly MeterReadingService _meterReadingService;
+
     public MeterReadingServiceTest()
     {
       _meterReadingService = new MeterReadingService(new Dictionary<string, List<ElectricityReading>>());
@@ -20,10 +24,6 @@
           new ElectricityReading { Time = DateTime.Now.AddMinutes(-15), Reading = 30m }
         });
     }
-
-    private static readonly string _smartMeterID = "smart-meter-id";
-
-    private readonly MeterReadingService _meterReadingService;
 
     [Fact]
     public void GivenMeterIdThatDoesNotExistShouldReturnNull()

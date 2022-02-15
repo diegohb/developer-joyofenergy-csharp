@@ -12,6 +12,13 @@
 
   public class PricePlanComparisonTest
   {
+    private static readonly string _smartMeterID = "smart-meter-id";
+    private readonly PricePlanComparatorController _controller;
+    private readonly MeterReadingService _meterReadingService;
+
+    private readonly Dictionary<string, SupplierEnum>
+      _smartMeterToPricePlanAccounts = new Dictionary<string, SupplierEnum>();
+
     public PricePlanComparisonTest()
     {
       var readings = new Dictionary<string, List<ElectricityReading>>();
@@ -26,13 +33,6 @@
       var accountService = new AccountService(_smartMeterToPricePlanAccounts);
       _controller = new PricePlanComparatorController(pricePlanService, accountService);
     }
-
-    private static readonly string _smartMeterID = "smart-meter-id";
-    private readonly PricePlanComparatorController _controller;
-    private readonly MeterReadingService _meterReadingService;
-
-    private readonly Dictionary<string, SupplierEnum>
-      _smartMeterToPricePlanAccounts = new Dictionary<string, SupplierEnum>();
 
     private static List<PeakTimeMultiplier> noMultipliers()
     {

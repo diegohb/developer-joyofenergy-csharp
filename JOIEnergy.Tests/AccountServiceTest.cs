@@ -7,6 +7,8 @@ namespace JOIEnergy.Tests
 
   public class AccountServiceTest
   {
+    private readonly AccountService _accountService;
+
     public AccountServiceTest()
     {
       var smartMeterToPricePlanAccounts = new Dictionary<string, SupplierEnum>();
@@ -17,8 +19,6 @@ namespace JOIEnergy.Tests
 
     private const SupplierEnum pricePlanID = SupplierEnum.PowerForEveryone;
     private const string smartMeterID = "smart-meter-id";
-
-    private readonly AccountService _accountService;
 
     [Fact]
     public void GivenAnUnknownSmartMeterIdReturnsANullSupplier()

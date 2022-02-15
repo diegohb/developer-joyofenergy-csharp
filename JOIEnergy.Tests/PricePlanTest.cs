@@ -8,6 +8,8 @@
 
   public class PricePlanTest
   {
+    private readonly PricePlan _pricePlan;
+
     public PricePlanTest()
     {
       _pricePlan = new PricePlan
@@ -21,8 +23,6 @@
         }
       };
     }
-
-    private readonly PricePlan _pricePlan;
 
     [Fact]
     public void TestGetBasePrice()
