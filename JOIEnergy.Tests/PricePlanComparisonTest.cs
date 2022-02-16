@@ -22,7 +22,7 @@
     public PricePlanComparisonTest()
     {
       var readings = new Dictionary<string, List<ElectricityReading>>();
-      _meterReadingService = new MeterReadingService(readings, null, null);
+      _meterReadingService = new MeterReadingService(readings);
       var pricePlans = new List<PricePlan>
       {
         new PricePlan { EnergySupplier = SupplierEnum.DrEvilsDarkEnergy, UnitRate = 10, PeakTimeMultiplier = noMultipliers() },

@@ -7,11 +7,11 @@
   [Route("usage")]
   public class UsageController : Controller
   {
-    private readonly IMeterReadingService _meterReadingService;
+    private readonly UsageService _usageService;
 
-    public UsageController(IMeterReadingService meterReadingServiceParam)
+    public UsageController(UsageService usageServiceParam)
     {
-      _meterReadingService = meterReadingServiceParam;
+      _usageService = usageServiceParam;
     }
 
     [HttpGet("{smartMeterIdParam}/usage/{startDateParam}")]
@@ -19,7 +19,7 @@
     {
       try
       {
-        var cost = _meterReadingService.GetCostOfAWeekOfReadings(smartMeterIdParam, startDateParam);
+        var cost = _usageService.GetCostOfAWeekOfReadings(smartMeterIdParam, startDateParam);
         return Ok(cost);
       }
       catch (ApplicationException)

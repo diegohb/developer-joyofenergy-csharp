@@ -20,18 +20,18 @@
       {
         new PricePlan { EnergySupplier = SupplierEnum.TheGreenEco, UnitRate = 2, PeakTimeMultiplier = noMultipliers() }
       };
-      var readingService = new MeterReadingService
-      (new Dictionary<string, List<ElectricityReading>>(),
-        smartMeterToPricePlanAccounts,
-        pricePlans);
-
-      readingService.StoreReadings
-      (_smartMeterID,
-        new List<ElectricityReading>
+      var readingService = new UsageService
+      (new Dictionary<string, List<ElectricityReading>>
+      {
         {
-          new ElectricityReading { Time = DateTime.Now.AddDays(-4), Reading = 35m },
-          new ElectricityReading { Time = DateTime.Now.AddDays(-3), Reading = 30m }
-        });
+          "smart-meter-id",
+          new List<ElectricityReading>
+          {
+            new ElectricityReading { Time = DateTime.Now.AddDays(-4), Reading = 35m },
+            new ElectricityReading { Time = DateTime.Now.AddDays(-3), Reading = 30m }
+          }
+        }
+      }, smartMeterToPricePlanAccounts, pricePlans);
 
       const decimal expectedValue = 1560;
 

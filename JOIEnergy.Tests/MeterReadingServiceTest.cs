@@ -14,7 +14,7 @@
 
     public MeterReadingServiceTest()
     {
-      _meterReadingService = new MeterReadingService(new Dictionary<string, List<ElectricityReading>>(), null, null);
+      _meterReadingService = new MeterReadingService(new Dictionary<string, List<ElectricityReading>>());
 
       _meterReadingService.StoreReadings
       (_smartMeterID,
