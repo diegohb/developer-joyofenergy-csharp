@@ -1,16 +1,36 @@
 ﻿namespace JOIEnergy.Services
 {
+  using System;
   using System.Collections.Generic;
+  using System.Linq;
   using Domain;
+  using Enums;
 
   public class MeterReadingService : IMeterReadingService
   {
-    public MeterReadingService(Dictionary<string, List<ElectricityReading>> meterAssociatedReadingsParam)
+    private readonly List<PricePlan> _pricePlans;
+    private readonly Dictionary<string, SupplierEnum> _smartMeterToPricePlanAccounts;
+
+    public MeterReadingService
+    (Dictionary<string, List<ElectricityReading>> meterAssociatedReadingsParam, Dictionary<string, SupplierEnum> smartMeterToPricePlanAccountsParam,
+      List<PricePlan> pricePlansParam)
     {
+      _smartMeterToPricePlanAccounts = smartMeterToPricePlanAccountsParam;
+      _pricePlans = pricePlansParam;
+
       MeterAssociatedReadings = meterAssociatedReadingsParam;
     }
 
     public Dictionary<string, List<ElectricityReading>> MeterAssociatedReadings { get; set; }
+
+
+    public decimal GetCostOfAWeekOfReadings(string smartMeterIDParam, DateTime startingDateParam)
+    {
+      var readings = GetReadings(smartMeterIDParam);
+      var suplierEnum = _smartMeterToPricePlanAccounts[smartMeterIDParam];
+      var pricePlan = _pricePlans.Find(p => p.EnergySupplier.Equals(suplierEnum));
+      return calculateCost(readings, pricePlan);
+    }
 
     public List<ElectricityReading> GetReadings(string smartMeterIdParam)
     {
@@ -33,5 +53,33 @@
       (electricityReading =>
         MeterAssociatedReadings[smartMeterIdParam].Add(electricityReading));
     }
+
+    #region Support Methods
+
+    private decimal calculateAverageReading(List<ElectricityReading> electricityReadingsParam)
+    {
+      var newSummedReadings = electricityReadingsParam.Select(readings => readings.Reading)
+        .Aggregate((reading, accumulator) => reading + accumulator);
+
+      return newSummedReadings / electricityReadingsParam.Count();
+    }
+
+    private decimal calculateCost(List<ElectricityReading> electricityReadingsParam, PricePlan pricePlanParam)
+    {
+      var average = calculateAverageReading(electricityReadingsParam);
+      var timeElapsed = calculateTimeElapsed(electricityReadingsParam);
+      var averagedCost = average * timeElapsed;
+      return averagedCost * pricePlanParam.UnitRate;
+    }
+
+    private decimal calculateTimeElapsed(List<ElectricityReading> electricityReadingsParam)
+    {
+      var first = electricityReadingsParam.Min(reading => reading.Time);
+      var last = electricityReadingsParam.Max(reading => reading.Time);
+
+      return (decimal)(last - first).TotalHours;
+    }
+
+    #endregion
   }
 }

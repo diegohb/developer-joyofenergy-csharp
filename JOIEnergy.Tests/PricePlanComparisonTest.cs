@@ -22,7 +22,7 @@
     public PricePlanComparisonTest()
     {
       var readings = new Dictionary<string, List<ElectricityReading>>();
-      _meterReadingService = new MeterReadingService(readings);
+      _meterReadingService = new MeterReadingService(readings, null, null);
       var pricePlans = new List<PricePlan>
       {
         new PricePlan { EnergySupplier = SupplierEnum.DrEvilsDarkEnergy, UnitRate = 10, PeakTimeMultiplier = noMultipliers() },
@@ -32,11 +32,6 @@
       var pricePlanService = new PricePlanService(pricePlans, _meterReadingService);
       var accountService = new AccountService(_smartMeterToPricePlanAccounts);
       _controller = new PricePlanComparatorController(pricePlanService, accountService);
-    }
-
-    private static List<PeakTimeMultiplier> noMultipliers()
-    {
-      return new List<PeakTimeMultiplier>();
     }
 
     [Fact]
@@ -123,5 +118,14 @@
       Assert.Equal(33.333m, recommendations[1].Value, 3);
       Assert.Equal(2, recommendations.Count);
     }
+
+    #region Support Methods
+
+    private static List<PeakTimeMultiplier> noMultipliers()
+    {
+      return new List<PeakTimeMultiplier>();
+    }
+
+    #endregion
   }
 }
