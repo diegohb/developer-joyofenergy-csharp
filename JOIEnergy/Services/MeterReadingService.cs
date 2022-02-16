@@ -27,6 +27,11 @@
     public decimal GetCostOfAWeekOfReadings(string smartMeterIDParam, DateTime startingDateParam)
     {
       var readings = GetReadings(smartMeterIDParam);
+      if (!readings.Any())
+      {
+        throw new ApplicationException("Unable to find smart reader by id.");
+      }
+
       var suplierEnum = _smartMeterToPricePlanAccounts[smartMeterIDParam];
       var pricePlan = _pricePlans.Find(p => p.EnergySupplier.Equals(suplierEnum));
       return calculateCost(readings, pricePlan);
