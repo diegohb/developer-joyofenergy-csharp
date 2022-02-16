@@ -1,11 +1,10 @@
-﻿using System;
-namespace JOIEnergy.Enums
+﻿namespace JOIEnergy.Enums
 {
-    public enum Supplier
-    {
-        DrEvilsDarkEnergy,
-        TheGreenEco,
-        PowerForEveryone,
-        NullSupplier
-    }
+  public enum SupplierEnum
+  {
+    DrEvilsDarkEnergy,
+    TheGreenEco,
+    PowerForEveryone,
+    NullSupplier
+  }
 }

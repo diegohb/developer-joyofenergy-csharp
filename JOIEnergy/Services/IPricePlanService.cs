@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace JOIEnergy.Services
+﻿namespace JOIEnergy.Services
 {
-    public interface IPricePlanService
-    {
-        Dictionary<string, decimal> GetConsumptionCostOfElectricityReadingsForEachPricePlan(string smartMeterId);
-    }
+  using System.Collections.Generic;
+
+  public interface IPricePlanService
+  {
+    Dictionary<string, decimal> GetConsumptionCostOfElectricityReadingsForEachPricePlan(string smartMeterIdParam);
+  }
 }
